@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="adminPanelApp">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body ng-controller="UserController">
+    <div class="container">
+        <h1>User Management</h1>
+        
+        <div class="alert alert-danger" ng-show="errorMessage">
+            {{ errorMessage }}
+        </div>
+        
+        <div ng-show="users.length === 0">Loading users...</div>
+        
+        <div ng-show="users.length > 0">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Login</th>
+                        <th>Permissions</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.login }}</td>
+                        <td>
+                            <span ng-repeat="permission in user.permissions">{{ permission }}<br></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editUser(user)">Edit</button>
+                            <button class="btn btn-danger" ng-click="deleteUser(user.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 ng-show="editingUser">Edit User</h2>
+            <h2 ng-show="!editingUser">Create New User</h2>
+            <form ng-submit="editingUser ? updateUser() : createUser()">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" ng-model="userForm.name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" ng-model="userForm.login" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="permissions">Permissions:</label>
+                    <div ng-repeat="permission in permissions">
+                        <label>
+                            <input type="checkbox" 
+                                   ng-model="userForm.selectedPermissions[permission.id]" 
+                                   ng-change="updatePermission(permission.id, $event.target.checked)">
+                            {{ permission.name }}
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">{{ editingUser ? 'Update' : 'Create' }}</button>
+                <button type="button" class="btn btn-default" ng-click="cancelEdit()" ng-show="editingUser">Cancel</button>
+            </form>
+            <hr>
+            <div>
+                <a href="permissions.html" class="btn btn-info">Manage Permissions</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="../app.js"></script>
+    <script src="controllers/services/userService.js"></script>
+    <script src="controllers/services/permissionService.js"></script>
+    <script src="controllers/userController.js"></script>
+</body>
+</html>

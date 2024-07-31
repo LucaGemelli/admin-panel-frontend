@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="adminPanelApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Permissions</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body ng-controller="PermissionController">
+    <div class="container">
+        <h1>Manage Permissions</h1>
+
+        <div ng-show="permissions.length === 0">Loading permissions...</div>
+
+        <div class="alert alert-danger" ng-show="errorMessage">
+            {{ errorMessage }}
+        </div>
+
+        <div ng-show="permissions.length > 0">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="permission in permissions">
+                        <td>{{ permission.id }}</td>
+                        <td>{{ permission.name }}</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editPermission(permission)">Edit</button>
+                            <button class="btn btn-danger" ng-click="deletePermission(permission.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 ng-show="editingPermission">Edit Permission</h2>
+            <h2 ng-show="!editingPermission">Create New Permission</h2>
+            <form ng-submit="editingPermission ? updatePermission() : createPermission()">
+                <div class="form-group">
+                    <label for="permissionName">Name:</label>
+                    <input type="text" id="permissionName" ng-model="permissionForm.name" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success">{{ editingPermission ? 'Update' : 'Create' }}</button>
+                <button type="button" class="btn btn-default" ng-click="cancelEdit()" ng-show="editingPermission">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="../app.js"></script>
+    <script src="controllers/services/permissionService.js"></script>
+    <script src="controllers/permissionController.js"></script>
+</body>
+</html>
