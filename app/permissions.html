@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Permissions</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body ng-controller="PermissionController">
     <div class="container">
-        <h1>Manage Permissions</h1>
+        <h1 class="display-3" style="text-align: center;">Manage Permissions</h1>
 
         <div ng-show="permissions.length === 0">Loading permissions...</div>
 
         <div class="alert alert-danger" ng-show="errorMessage">
             {{ errorMessage }}
         </div>
-
+        <hr>
+        <div>
+            <h4>Back to User Area</h4>
+            <a href="user.html" class="btn btn-link">Manage User</a>
+        </div>
+        <hr>
         <div ng-show="permissions.length > 0">
-            <table class="table table-bordered">
-                <thead>
+            <table class="table">
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>

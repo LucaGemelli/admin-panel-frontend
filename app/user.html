@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>User Management</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body ng-controller="UserController">
     <div class="container">
-        <h1>User Management</h1>
+        <h1 class="display-3" style="text-align: center;">User Management</h1>
         
         <div class="alert alert-danger" ng-show="errorMessage">
             {{ errorMessage }}
         </div>
-        
+        <hr>
+        <div>
+            <h4>Access Permission Area</h4>
+            <a href="permissions.html" class="btn btn-link">Manage Permissions</a>
+        </div>
+        <hr>
         <div ng-show="users.length === 0">Loading users...</div>
         
         <div ng-show="users.length > 0">
-            <table class="table table-bordered">
-                <thead>
+            <table class="table">
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -51,7 +56,12 @@
                 </div>
                 <div class="form-group">
                     <label for="login">Login:</label>
-                    <input type="text" id="login" ng-model="userForm.login" class="form-control">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                        </div>
+                        <input type="text" id="login" ng-model="userForm.login" class="form-control" placeholder="Login" aria-label="Login" aria-describedby="basic-addon1">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="permissions">Permissions:</label>
@@ -67,10 +77,6 @@
                 <button type="submit" class="btn btn-success">{{ editingUser ? 'Update' : 'Create' }}</button>
                 <button type="button" class="btn btn-default" ng-click="cancelEdit()" ng-show="editingUser">Cancel</button>
             </form>
-            <hr>
-            <div>
-                <a href="permissions.html" class="btn btn-info">Manage Permissions</a>
-            </div>
         </div>
     </div>
 
